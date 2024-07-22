@@ -17,7 +17,7 @@ def generate_text_simple(model, idx, max_new_tokens, context_size):  # A
 
 
 if __name__ == '__main__':
-    tokenizer = tiktoken.encoding_for_model("gpt-4o")
+    tokenizer = tiktoken.encoding_for_model("gpt-2")
     start_context = "Hello, I am"
     encoded = tokenizer.encode(start_context)
     print("encoded:", encoded)
