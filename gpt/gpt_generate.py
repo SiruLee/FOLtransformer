@@ -15,7 +15,7 @@ import torch
 from tqdm import tqdm
 
 # Import from local files
-from interfaces import GPTModel
+from gpt.interfaces import GPTModel
 
 
 def text_to_token_ids(text, tokenizer):
@@ -273,6 +273,33 @@ def main(gpt_config, input_prompt, model_size):
         idx=text_to_token_ids(input_prompt, tokenizer),
         max_new_tokens=50,
         context_size=gpt_config["context_length"],
+        top_k=50,
+        temperature=1.0
+    )
+
+    print("Output text:\n", token_ids_to_text(token_ids, tokenizer))
+
+
+def init_gpt(gpt_config, model_size):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    settings, params = download_and_load_gpt2(model_size=model_size, models_dir="gpt2")
+
+    gpt = GPTModel(gpt_config)
+    load_weights_into_gpt(gpt, params)
+    gpt.to(device)
+    gpt.eval()
+    return gpt
+
+
+def input_gpt(model, input_prompt, tokenizer, max_new_tokens):
+    torch.manual_seed(123)
+
+    token_ids = generate(
+        model=model,
+        idx=text_to_token_ids(input_prompt, tokenizer),
+        max_new_tokens=max_new_tokens,
+        context_size=model.context_length,
         top_k=50,
         temperature=1.0
     )
