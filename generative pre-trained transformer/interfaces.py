@@ -4,13 +4,11 @@ from attention.multihead import MultiHeadAttention
 
 GPT_CONFIG_124M = {
     "vocab_size": 50257,  # Vocabulary size
-    "context_length": 1024,  # Context length
+    "context_length": 256,  # Context length
     "emb_dim": 768,  # Embedding dimension
     "n_heads": 12,  # Number of attention heads
     "n_layers": 12,  # Number of layers
-    "emb_drop_rate": 0.1,  # Embedding Layer dropout rate
-    "short_drop_rate": 0.1,  # Shortcut Layer dropout rate
-    "att_drop_rate": 0.1,  # Attention Layer dropout rate
+    "drop_rate": 0.1,  # Dropout rate
     "qkv_bias": False  # Query-Key-Value bias
 }
 
@@ -20,9 +18,7 @@ class GPTModel(nn.Module):
         super().__init__()
         self.tok_emb = nn.Embedding(cfg["vocab_size"], cfg["emb_dim"])
         self.pos_emb = nn.Embedding(cfg["context_length"], cfg["emb_dim"])
-        self.drop_emb = nn.Dropout(cfg["emb_drop_rate"])
-        self.drop_short = nn.Dropout(cfg["short_drop_rate"])
-        self.drop_att = nn.Dropout(cfg["att_drop_rate"])
+        self.drop_emb = nn.Dropout(cfg["drop_rate"])
 
         self.trf_blocks = nn.Sequential(*[TransformerBlock(cfg) for _ in range(cfg["n_layers"])])
 
@@ -50,12 +46,12 @@ class TransformerBlock(nn.Module):
             d_out=cfg["emb_dim"],
             context_length=cfg["context_length"],
             num_heads=cfg["n_heads"],
-            dropout=cfg["att_drop_rate"],
+            dropout=cfg["drop_rate"],
             qkv_bias=cfg["qkv_bias"])
         self.ff = FeedForward(cfg)
         self.norm1 = LayerNorm(cfg["emb_dim"])
         self.norm2 = LayerNorm(cfg["emb_dim"])
-        self.drop_resid = nn.Dropout(cfg["short_drop_rate"])
+        self.drop_resid = nn.Dropout(cfg["drop_rate"])
 
     def forward(self, x):
         # A
@@ -66,9 +62,9 @@ class TransformerBlock(nn.Module):
         y = x + shortcut  # Add the original input back
 
         shortcut = y  # B
-        y = self.norm2(x)
-        y = self.ff(x)
-        y = self.drop_resid(x)
+        y = self.norm2(y)
+        y = self.ff(y)
+        y = self.drop_resid(y)
         y = y + shortcut  # C
         return y
 
