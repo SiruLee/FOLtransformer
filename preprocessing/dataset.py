@@ -25,7 +25,7 @@ class GPTDataset(Dataset):
 
 
 def init_dataloader(txt, batch_size=4, max_length=256, stride=128, shuffle=True, drop_last=True):
-    tokenizer = tiktoken.encoding_for_model("gpt-4")
+    tokenizer = tiktoken.encoding_for_model("gpt-2")
     dataset = GPTDataset(txt, tokenizer, max_length, stride)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, drop_last=drop_last)
     return dataloader
