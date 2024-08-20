@@ -1,0 +1,61 @@
+% Saved by Prover9-Mace4 Version 0.5, December 2007.
+
+formulas(assumptions).
+
+% objects
+all x (solid(x) | curve(x) | hole(x) | joint(x)).
+all x (solid(x) -> (-curve(x) & -hole(x) & -joint(x))).
+all x (curve(x) -> (-hole(x) & -joint(x))).
+all x (hole(x) -> -joint(x)).
+
+% sketched plane
+all x ((solid(x) | curve(x)) -> (on_xy(x) | on_yz(x) | on_zx(x))).
+all x (on_xy(x) -> (-on_yz(x) & -on_zx(x))).
+all x (on_yz(x) -> (-on_xy(x) & -on_zx(x))).
+all x (on_zx(x) -> (-on_xy(x) & -on_yz(x))).
+
+% curves
+all x (curve(x) <-> (is_arc(x) | is_circle(x) | is_ellipse(x) | is_line(x))).
+all x (is_arc(x) -> (-is_circle(x) & is_ellipse(x) & is_line(x))).
+all x (is_circle(x) -> (is_ellipse(x) & is_line(x))).
+all x (is_ellipse(x) -> is_line(x)).
+
+all x (is_arc(x) -> (with_center(x) & with_start(x) & with_end(x))).
+all x (is_circle(x) -> (with_center(x) & with_radius(x))).
+all x (is_ellipse(x) -> (with_center(x) & with_major(x) & with_point(x))).
+all x (is_line(x) -> (with_start(x) & with_end(x))).
+
+% solids
+all x (solid(x) <-> (is_box(x) | is_cylinder(x) | is_sphere(x) | is_torus(x) | is_coil(x) | is_pipe(x))).
+all x (is_box(x) -> (-is_cylinder(x) & -is_sphere(x) & -is_torus(x) & -is_coil(x) & -is_pipe(x))).
+all x (is_cylinder(x) -> (-is_sphere(x) & -is_torus(x) & -is_coil(x) & -is_pipe(x))).
+all x (is_sphere(x) -> (-is_torus(x) & -is_coil(x) & -is_pipe(x))).
+all x (is_torus(x) -> (-is_coil(x) & -is_pipe(x))).
+all x (is_coil(x) -> -is_pipe(x)).
+
+all x all y ((solid(x) & has_hole(x,y)) -> hole(y)).
+all x (is_box(x) -> (with_length(x) & with_height(x) & with_width(x))).
+all x (is_cylinder(x) -> (with_diameter(x) & with_height(x))).
+all x (is_sphere(x) -> with_diameter(x)).
+all x (is_torus(x) -> (with_major(x) & with_minor(x))).
+all x (is_coil(x) -> (with_diameter(x) & with_revol(x) & with_height(x) & with_angle(x) & with_section_size(x))).
+all x (is_pipe(x) -> (with_diameter(x) & exists y (curve(y) & pipe_drawn_on(x,y)))).
+all x all y (pipe_drawn_on(x,y) -> (is_pipe(x) & curve(y))).
+
+% holes
+all x (hole(x) -> (is_simple(x) | is_counterbore(x) | is_countersink(x))).
+all x (is_simple(x) -> with_diameter(x)).
+all x (is_counterbore(x) -> (with_diameter(x) & with_counterbore_diameter(x) & with_counterbore_depth(x))).
+all x (is_countersink(x) -> (with_diameter(x) & with_countersink_diameter(x) & with_countersink_angle(x))).
+
+% joints
+all x (joint(x) -> (is_rigid(x) | is_revolute(x) | is_slider(x) | is_cylindrical(x) | is_pinslot(x) | is_planer(x) | is_ball(x))).
+all x (joint(x) -> exists y exists z (is_joined_by(y,z,x) & x!=y & x!=z & y!=z)).
+all x all y all z (is_joined_by(x,y,z) -> (x!=y & x!=z & y!=z & solid(x) & solid(y) & joint(z))).
+
+end_of_list.
+
+formulas(goals).
+
+end_of_list.
+
