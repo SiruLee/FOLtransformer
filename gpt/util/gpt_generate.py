@@ -15,7 +15,7 @@ import torch
 from tqdm import tqdm
 
 # Import from local files
-from interfaces import GPTModel
+from ..interfaces import GPTModel
 
 
 def text_to_token_ids(text, tokenizer):

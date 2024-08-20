@@ -1,5 +1,5 @@
 from gpt.util.gpt_generate import *
-from gpt.util.interfaces import *
+from gpt.interfaces import *
 
 CHOOSE_MODEL = "gpt2-medium (355M)"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -25,7 +25,7 @@ BASE_CONFIG.update(model_configs[CHOOSE_MODEL])
 
 gpt = init_gpt(BASE_CONFIG, model_size)
 
-gpt.load_state_dict(torch.load("model/gpt2-medium355M-shp.pth"))
+gpt.load_state_dict(torch.load("./gpt/model/gpt2-medium355M-shp.pth"))
 
 entry = {}
 
