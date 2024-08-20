@@ -1,5 +1,5 @@
 from gpt.util.gpt_generate import *
-from interfaces import *
+from gpt.util.interfaces import *
 
 CHOOSE_MODEL = "gpt2-medium (355M)"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
