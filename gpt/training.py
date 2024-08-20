@@ -2,7 +2,7 @@ import tiktoken
 import torch
 from preprocessing.dataset import init_dataloader
 from interfaces import GPT_CONFIG_124M, GPTModel
-from gpt_generate import generate
+from gpt.util.gpt_generate import generate
 import matplotlib.pyplot as plt
 
 
