@@ -1,6 +1,6 @@
 import tiktoken
 import torch
-from preprocessing.dataset import init_dataloader
+from gpt.preprocessing.dataset import init_dataloader
 from gpt.interfaces import GPT_CONFIG_124M, GPTModel
 from gpt.util.gpt_generate import generate
 import matplotlib.pyplot as plt
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     """
     Calculation of Training Loss and Validation Loss example
     """
-    file_path = "../preprocessing/the_verdict.txt"
+    file_path = "preprocessing/the_verdict.txt"
     with open(file_path, "r", encoding="utf-8") as file:
         text_data = file.read()
 

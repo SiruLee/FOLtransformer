@@ -1,5 +1,5 @@
 import torch.nn
-from preprocessing.dataset import init_dataloader
+from gpt.preprocessing.dataset import init_dataloader
 
 output_dim = 256
 vocab_size = 100276
