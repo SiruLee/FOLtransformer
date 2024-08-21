@@ -22,7 +22,7 @@ The program then checks if the base model is present at `./gpt/gpt2/355M`. If no
 The user will be asked two options for MACE4 Execution: a domain size and the number of models to find. Note that the domain size takes the value from the minimum value of 2.
 
 ### User Input
-The user has two options for the input prompt; a natural language prompt, or an explicit FOL formula. 
+The user has three options for the input prompt; a natural language prompt, an explicit FOL formula, or `quit`.
 
 A natural language prompt does not require other specific instructions.
 Below are two examples of natural language input:
@@ -38,6 +38,8 @@ provided by the user. Below is an example of explicit input:
 ```
 Input Prompt: -ignore exists x exists y (is_box(x) & is_cylinder(y))
 ```
+
+Lastly, user can enter `quit` to terminate the program.
 
 ### MACE4-JSON Parsing
 Given the user input combined with the ontology input at `./mace4/input/fusion.in`, MACE4 will run to generate a desired number of models. After the models are generated, the output file at `./mace4/output/`
