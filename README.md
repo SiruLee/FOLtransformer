@@ -3,6 +3,9 @@
 The project includes an LLM with the base model of GPT-2 Medium (355M parameters) which was finetuned with the dataset of NL-FOL pairs. Specifically, this model is designed 
 to simulate the MACE4 Model Generator under a pre-defined ontology for industrial design.
 
+## Download
+Due to the large file storage limit on Github, the repository does not include GPT's weight data files (~3.4GB in total). Please download this project from the OneDrive link I provided.
+
 ## How-To-Use
 ### Execution
 The program can be executed via `main.py`.
