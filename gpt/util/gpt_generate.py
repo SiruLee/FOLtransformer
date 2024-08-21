@@ -295,7 +295,7 @@ def main(gpt_config, input_prompt, model_size):
 def init_gpt(gpt_config, model_size):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    settings, params = download_and_load_gpt2(model_size=model_size, models_dir="../gpt2")
+    settings, params = download_and_load_gpt2(model_size=model_size, models_dir="./gpt/gpt2")
 
     gpt = GPTModel(gpt_config)
     load_weights_into_gpt(gpt, params)

@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from attention.multihead import MultiHeadAttention
+from gpt.attention.multihead import MultiHeadAttention
 
 GPT_CONFIG_124M = {
     "vocab_size": 50257,  # Vocabulary size
