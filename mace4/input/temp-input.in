@@ -1,6 +1,11 @@
 % Saved by Prover9-Mace4 Version 0.5, December 2007.
+if(Mace4).   % Additional input for Mace4
+assign(max_megs, -1).
+end_if.
+
 
 formulas(assumptions).
+ exists x exists y (is_box(x) & is_cylinder(y)).
 
 % objects
 all x (solid(x) | curve(x) | hole(x) | joint(x)).
@@ -51,7 +56,7 @@ all x (is_countersink(x) -> (with_diameter(x) & with_countersink_diameter(x) & w
 % joints
 all x (joint(x) -> (is_rigid(x) | is_revolute(x) | is_slider(x) | is_cylindrical(x) | is_pinslot(x) | is_planer(x) | is_ball(x))).
 all x (joint(x) -> exists y exists z (is_joined_by(y,z,x) & x!=y & x!=z & y!=z)).
-all x all y all z (is_joined_by(x,y,z) -> (x!=y & x!=z & y!=z & solid(x) & solid(y) & joint(z))).
+all x all y all z (is_joined_by(x,y,z) -> (x!=y & x!=z & y!=z & solid(x) & solid(y) & joint(z) & is_joined(x, y))).
 
 end_of_list.
 

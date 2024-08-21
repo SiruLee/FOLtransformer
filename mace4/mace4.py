@@ -9,20 +9,22 @@ import os
 import matplotlib.pyplot as plt
 
 
-def run_mace4(fm="", output_dir="output", out_name="temp-output", axiom=None, domain_size=2, max_models=1, max_seconds=60, model_output=0):
+def run_mace4(fm="", output_dir="output", out_name="temp-output", axiom=None, domain_size=1, max_models=1, max_seconds=60, model_output=0):
     assert axiom is not None, "no axiom provided"
 
-    os.system(f"cat {axiom} > ./temp-input")
-    file = open("./temp-input", "r")
+    os.system(f"cat {axiom} > ./mace4/input/temp-input.in")
+    file = open("./mace4/input/temp-input.in", "r")
     contents = file.readlines()
+    file.close()
     i = contents.index("formulas(assumptions).\n")
     contents.insert(i + 1, fm)
-    w = open("./temp-input", "w")
+    w = open("./mace4/input/temp-input.in", "w")
     contents = "".join(contents)
     w.write(contents)
+    w.close()
     print(f"\n\nRunning Mace4 with domain size starting from {domain_size}, finding {max_models} models in {max_seconds} seconds.")
-    os.system(f"./mace4 -n {domain_size} -s 60 -b -1 -N -1 -i 1 -m {max_models} -t {max_seconds} -P {model_output} -p 0 -f temp-input > ../outputs/{output_dir}/{out_name}.out")
-    os.system("rm temp-input")
+    os.system(f"./mace4/mace4 -n {domain_size} -s 60 -b -1 -N -1 -n {domain_size} -i 1 -m {max_models} -t {max_seconds} -P {model_output} -p 0 -f ./mace4/input/temp-input.in > ./mace4/{output_dir}/{out_name}.out")
+    # os.system("rm temp-input")
     
 
 def measure_time(dirname, filename):
@@ -92,5 +94,5 @@ def performance_analysis():
     
 
 if __name__ == "__main__":
-    run_mace4("", "output", "example", "./input/fusion.txt")
+    run_mace4("", "output", "example", "./input/fusion.in")
     
